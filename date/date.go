@@ -3,38 +3,18 @@ package date
 import (
 	"fmt"
 	"regexp"
-	"strconv"
+
 	"strings"
 	"time"
 )
 
-var monthNames = []string{
-	"jan",
-	"feb",
-	"mar",
-	"apr",
-	"may",
-	"jun",
-	"jul",
-	"aug",
-	"sep",
-	"oct",
-	"nov",
-	"dec",
-	"january",
-	"february",
-	"march",
-	"april",
-	"may",
-	"june",
-	"july",
-	"august",
-	"september",
-	"october",
-	"november",
-	"december",
+var regexpStrings = []string{
+	`^(?P<year>\d{4})[\.|\-|\s|\/](?P<month>\d{1,2})[\.|\-|\s|\/](?P<day>\d{1,2})$`,
+	`^(?P<day>\d{1,2})[\.|\-|\s|\/](?P<month>\d{1,2})[\.|\-|\s|\/]*(?P<year>\d{4}|\d{2}|\d{0})$`,
+	`^(?P<day>\d{1,2})[\.|\-|\s|\/](?P<month>\w+)[\.|\-|\s|\/]*(?P<year>\d{4}|\d{2}|\d{0})$`,
 }
 
+// indexOf can search a string in []string, return index or -1 if no match found
 func indexOf(slice []string, v string) int {
 	for i, s := range slice {
 		if s == strings.ToLower(v) {
@@ -44,7 +24,19 @@ func indexOf(slice []string, v string) int {
 	return -1
 }
 
-func ParseDate(reg string, date string) (time.Time, bool) {
+// ParseDate parse the date string and return time.Time format, will return bool if any unmatched case
+func ParseDateString(s string) time.Time {
+	for _, r := range regexpStrings {
+		t, b := parseDateByGivenRegExp(r, s)
+		if b {
+			return t
+		}
+	}
+	return time.Now()
+}
+
+// parseDateByGivenRegExp parse the date string with given regexp
+func parseDateByGivenRegExp(reg string, date string) (time.Time, bool) {
 	r := regexp.MustCompile(reg)
 
 	if r.MatchString(date) {
@@ -55,31 +47,42 @@ func ParseDate(reg string, date string) (time.Time, bool) {
 			result[name] = match[i]
 		}
 
-		year, _ := strconv.Atoi(result["year"])
-		day, _ := strconv.Atoi(result["day"])
-		month, _ := strconv.Atoi(result["month"])
+		day := result["day"]
+		month := result["month"]
+		year := result["year"]
 
-		// manage year
-		now := time.Now()
-		if year == 0 {
-			if int(now.Month()) <= month && now.Day() <= day {
-				year = now.Year()
-			} else {
-				year = now.Year() + 1
-			}
-		} else if year < 100 {
-			year = year + 2000
+		var layout string
+
+		layout = "2"
+
+		// parse month string
+		switch {
+		case len(month) < 3:
+			layout += "-1"
+		case len(month) == 3:
+			layout += "-Jan"
+		case len(month) > 3:
+			layout += "-January"
 		}
 
-		if month == 0 {
-			position := indexOf(monthNames, result["month"])
-			month = (position % 12) + 1
+		// parse year string
+		switch {
+		case len(year) == 0:
+			layout += "-2006"
+			year = fmt.Sprintf("%v", time.Now().Year())
+		case len(year) == 2:
+			layout += "-06"
+		case len(year) == 4:
+			layout += "-2006"
 		}
 
-		layout := "2006-1-2"
-
-		value := fmt.Sprintf("%v-%v-%v", year, month, day)
+		value := fmt.Sprintf("%v-%v-%v", day, month, year)
 		t, _ := time.Parse(layout, value)
+
+		if t.Before(time.Now()) && len(result["year"]) == 0 {
+			t = t.AddDate(1, 0, 0)
+		}
+
 		return t, true
 	}
 

@@ -13,18 +13,19 @@ type Items struct {
 
 type Item struct {
 	XMLName  xml.Name `xml:"item"`
-	Uid      string   `xml:"uid,attr"`
+	Uid      int      `xml:"uid,attr"`
 	Arg      string   `xml:"arg,attr"`
 	Title    string   `xml:"title"`
 	Subtitle string   `xml:"subtitle"`
 }
 
+//  CreateXML convert given time.Time value to xml format for alfred script filter workflow
 func CreateXML(layouts []string, result time.Time) (string, error) {
 	items := []Item{}
-	for _, l := range layouts {
+	for i, l := range layouts {
 		r := result.Format(l)
 		v := Item{
-			Uid:      r,
+			Uid:      i,
 			Arg:      r,
 			Title:    r,
 			Subtitle: r,
