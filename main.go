@@ -27,8 +27,9 @@ func main() {
 
 var layouts = []string{
 	"2006.01.02 (Mon)",
-	"2 Jan 06 (Mon)",
+	"2006-01-02 (Mon)",
 	"02.01.06 (Mon)",
 	"02/01/06 (Mon)",
+	"2 Jan 06 (Mon)",
 	"Mon, 1 Jan 06",
 }
