@@ -37,6 +37,7 @@ func ParseDateString(s string) time.Time {
 
 // parseDateByGivenRegExp parse the date string with given regexp
 func parseDateByGivenRegExp(reg string, date string) (time.Time, bool) {
+	// convert reg string to regexp struct
 	r := regexp.MustCompile(reg)
 
 	if r.MatchString(date) {
