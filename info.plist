@@ -8,11 +8,21 @@
 	<string>Productivity</string>
 	<key>connections</key>
 	<dict>
-		<key>AE40D970-140F-42F8-80E8-078331E2DB2E</key>
+		<key>6752F9AE-C6F2-4A36-BF1B-9294307B3629</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>CA97715A-B8DD-48AF-BD3B-C3B453BC2C2B</string>
+				<string>E43FF52B-6DC8-4F5B-AEA0-6A2EE986AE3E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>2F2885DA-41FA-434B-A41B-BB3FB090E72D</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -29,9 +39,78 @@
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>Date Parser</string>
+	<string>Date Converter</string>
 	<key>objects</key>
 	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Date Converter</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>E43FF52B-6DC8-4F5B-AEA0-6A2EE986AE3E</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>d</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>waiting ...</string>
+				<key>script</key>
+				<string>#!/bin/bash
+
+query="$1"
+
+./main.sh $query 2&gt; /dev/null
+</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Please enter a date string</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>6752F9AE-C6F2-4A36-BF1B-9294307B3629</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -45,50 +124,7 @@
 			<key>type</key>
 			<string>alfred.workflow.output.clipboard</string>
 			<key>uid</key>
-			<string>CA97715A-B8DD-48AF-BD3B-C3B453BC2C2B</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>keyword</key>
-				<string>date</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<true/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string></string>
-				<key>script</key>
-				<string>./main -d "{query}"</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string>./main.go</string>
-				<key>subtext</key>
-				<string></string>
-				<key>title</key>
-				<string>Date Parser</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>AE40D970-140F-42F8-80E8-078331E2DB2E</string>
+			<string>2F2885DA-41FA-434B-A41B-BB3FB090E72D</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -97,19 +133,28 @@
 	<string>date formatter</string>
 	<key>uidata</key>
 	<dict>
-		<key>AE40D970-140F-42F8-80E8-078331E2DB2E</key>
+		<key>2F2885DA-41FA-434B-A41B-BB3FB090E72D</key>
 		<dict>
+			<key>colorindex</key>
+			<integer>9</integer>
 			<key>xpos</key>
-			<integer>200</integer>
+			<integer>600</integer>
 			<key>ypos</key>
-			<integer>80</integer>
+			<integer>190</integer>
 		</dict>
-		<key>CA97715A-B8DD-48AF-BD3B-C3B453BC2C2B</key>
+		<key>6752F9AE-C6F2-4A36-BF1B-9294307B3629</key>
 		<dict>
 			<key>xpos</key>
-			<integer>510</integer>
+			<integer>110</integer>
 			<key>ypos</key>
-			<integer>80</integer>
+			<integer>110</integer>
+		</dict>
+		<key>E43FF52B-6DC8-4F5B-AEA0-6A2EE986AE3E</key>
+		<dict>
+			<key>xpos</key>
+			<integer>600</integer>
+			<key>ypos</key>
+			<integer>30</integer>
 		</dict>
 	</dict>
 	<key>webaddress</key>
