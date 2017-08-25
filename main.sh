@@ -23,13 +23,25 @@ parseDate ()
 	esac
 }
 
+ 
 if [ -z "$query" ]; then
 	# if empty imput, will try to parse string in clipboard. return null if fail
 	# will send stderr to /dev/null
-	datestring=$(date --date="pbpaste")
+	# which will not print to alfredApp
+	datestring=$(./gdate --date="$(pbpaste)")
 else
 	datestring=$(parseDate $query)
 fi
+
+
+now=$(./gdate +%s)
+input=$(./gdate --date="$datestring" +%s)
+
+if [ $((input - now > 0)) = 0 ]; then
+	datestring="$datestring + 1 year" 
+fi
+
+
 
 # `gdate` is same as `date` in linux
 # convert day value to chinese day
