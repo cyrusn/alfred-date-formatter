@@ -37,7 +37,6 @@ fi
 now=$(./gdate +%s)
 input=$(./gdate --date="$datestring" +%s)
 
-echo $((input - now))
 
 if [ $((input - now > -86400)) = 0 ]; then
 	datestring="$datestring + 1 year" 
