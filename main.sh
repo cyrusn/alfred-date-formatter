@@ -37,11 +37,11 @@ fi
 now=$(./gdate +%s)
 input=$(./gdate --date="$datestring" +%s)
 
-if [ $((input - now > 0)) = 0 ]; then
+echo $((input - now))
+
+if [ $((input - now > -86400)) = 0 ]; then
 	datestring="$datestring + 1 year" 
 fi
-
-
 
 # `gdate` is same as `date` in linux
 # convert day value to chinese day
