@@ -3,16 +3,16 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>Date</string>
+	<string>com.dateFormatter.cyrusn</string>
 	<key>category</key>
 	<string>Productivity</string>
 	<key>connections</key>
 	<dict>
-		<key>6752F9AE-C6F2-4A36-BF1B-9294307B3629</key>
+		<key>382524A6-16F2-45FC-AFF3-EEFCB2C1F7D7</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>E43FF52B-6DC8-4F5B-AEA0-6A2EE986AE3E</string>
+				<string>6752F9AE-C6F2-4A36-BF1B-9294307B3629</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -20,9 +20,25 @@
 				<key>vitoclose</key>
 				<false/>
 			</dict>
+		</array>
+		<key>6752F9AE-C6F2-4A36-BF1B-9294307B3629</key>
+		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>2F2885DA-41FA-434B-A41B-BB3FB090E72D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>F02AFFFB-B75A-4370-B640-8306573C6917</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6752F9AE-C6F2-4A36-BF1B-9294307B3629</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -35,7 +51,7 @@
 	<key>createdby</key>
 	<string>CyrusN</string>
 	<key>description</key>
-	<string></string>
+	<string>Date formatter for Chinese</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
@@ -45,21 +61,17 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>lastpathcomponent</key>
+				<key>focusedappvariable</key>
 				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<false/>
-				<key>removeextension</key>
-				<false/>
-				<key>text</key>
-				<string>{query}</string>
-				<key>title</key>
-				<string>Date Converter</string>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>keyword</key>
+				<string>df</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
+			<string>alfred.workflow.trigger.snippet</string>
 			<key>uid</key>
-			<string>E43FF52B-6DC8-4F5B-AEA0-6A2EE986AE3E</string>
+			<string>F02AFFFB-B75A-4370-B640-8306573C6917</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -68,6 +80,10 @@
 			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
@@ -85,12 +101,9 @@
 				<key>runningsubtext</key>
 				<string>waiting ...</string>
 				<key>script</key>
-				<string>#!/bin/bash
+				<string>query=$1
 
-query="$1"
-
-./main.sh $query 2&gt; /dev/null
-</string>
+./main.py $query</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -128,6 +141,37 @@ query="$1"
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>1</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>2</integer>
+				<key>hotmod</key>
+				<integer>1835008</integer>
+				<key>hotstring</key>
+				<string>D</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>382524A6-16F2-45FC-AFF3-EEFCB2C1F7D7</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string>date formatter</string>
@@ -138,21 +182,28 @@ query="$1"
 			<key>colorindex</key>
 			<integer>9</integer>
 			<key>xpos</key>
-			<integer>600</integer>
+			<integer>540</integer>
 			<key>ypos</key>
-			<integer>190</integer>
+			<integer>100</integer>
+		</dict>
+		<key>382524A6-16F2-45FC-AFF3-EEFCB2C1F7D7</key>
+		<dict>
+			<key>xpos</key>
+			<integer>90</integer>
+			<key>ypos</key>
+			<integer>170</integer>
 		</dict>
 		<key>6752F9AE-C6F2-4A36-BF1B-9294307B3629</key>
 		<dict>
 			<key>xpos</key>
-			<integer>110</integer>
+			<integer>310</integer>
 			<key>ypos</key>
-			<integer>110</integer>
+			<integer>100</integer>
 		</dict>
-		<key>E43FF52B-6DC8-4F5B-AEA0-6A2EE986AE3E</key>
+		<key>F02AFFFB-B75A-4370-B640-8306573C6917</key>
 		<dict>
 			<key>xpos</key>
-			<integer>600</integer>
+			<integer>90</integer>
 			<key>ypos</key>
 			<integer>30</integer>
 		</dict>
