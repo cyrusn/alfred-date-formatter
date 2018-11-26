@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/local/bin/python3
 import json
 import argparse
 import re
@@ -74,13 +74,19 @@ def parseDateString(date_string):
             parsedDateDict = {k: int(v)
                               for k, v in searchResult.groupdict().items()}
 
-            if 'year' not in parsedDateDict:
-                parsedDateDict['year'] = today.year
+            if "year" not in parsedDateDict:
+                parsedDateDict["year"] = today.year
 
             myDate = date(**parsedDateDict)
             if myDate < today:
                 myDate = myDate.replace(year=myDate.year + 1)
             return myDate
+
+
+def formatDate(fmt, date_string):
+    d = parseDateString(date_string)
+    c = getChineseDateFormat(d)
+    return fmt.format(d, c=c)
 
 
 def convertAlfredJSONString(date_string):
@@ -90,30 +96,61 @@ def convertAlfredJSONString(date_string):
     https://www.alfredapp.com/help/workflows/inputs/script-filter/json/
     """
     myJSON = {}
-    myJSON['items'] = []
+    myJSON["items"] = []
 
-    d = parseDateString(date_string)
     for f in OUTPUT_DATE_FORMATS:
-        c = getChineseDateFormat(d)
-        arg = f.format(d, c=c)
+        arg = formatDate(f, date_string)
 
-        myJSON['items'].append({
-            'title': arg,
-            'arg': arg
+        myJSON["items"].append({
+            "title": arg,
+            "arg": arg
         })
     return json.dumps(myJSON, ensure_ascii=False)
 
 
 if __name__ == "__main__":
 
-    ap = argparse.ArgumentParser()
+    helptext = "Chinese Date formatter:\n\nTYPE:\n"
+    for i, t in enumerate(OUTPUT_DATE_FORMATS):
+        helptext += "({:d}): {}\n".format(i, t)
+
+    ap = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description=helptext
+    )
     ap.add_argument(
-        'input',
-        help='Input date string for parser', nargs='?'
+        "input",
+        help="Input date string for parser", nargs="?"
+    )
+
+    ap.add_argument(
+        "-j",
+        "--json",
+        help="Print to JSON format for script filter of alfred workflow",
+        action="store_true"
+    )
+
+    ap.add_argument(
+        "-t",
+        "--type",
+        help="Print the formatted date with given type number",
+        default=0, type=int
     )
     args = ap.parse_args()
 
     today = format(date.today())
     date_string = args.input if args.input is not None else today
-    alfred_json = convertAlfredJSONString(date_string)
-    print(alfred_json)
+    if args.json:
+        alfred_json = convertAlfredJSONString(date_string)
+        print(alfred_json)
+        exit()
+
+    if args.type:
+        try:
+            fmt = OUTPUT_DATE_FORMATS[args.type]
+            print(formatDate(fmt, date_string))
+        except IndexError:
+            print('Unexpected integer for type')
+        exit()
+
+    print(parseDateString(date_string))
