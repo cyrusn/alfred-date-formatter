@@ -14,6 +14,16 @@ class Parser():
 
     def parseDate(self, datestring):
         today = date.today()
+
+        defaultDate = {
+            "year": today.year,
+            "month": today.month,
+            "day": today.day,
+        }
+
+        if datestring == '':
+            return defaultDate
+
         regs = [
             r"^(?P<year>[0-9]+)年(?P<month>[0-9]+)月(?P<day>[0-9]+)日$",
             r"^(?P<month>[0-9]+)月(?P<day>[0-9]+)日$",
@@ -31,10 +41,8 @@ class Parser():
                     return dateDict
                 else:
                     dateDict.update({'year': today.year})
+                    if datetime(dateDict['year'], dateDict['month'], dateDict['day']) < datetime.now():
+                        dateDict.update({'year': today.year + 1})
                     return dateDict
 
-        return {
-            "year": today.year,
-            "month": today.month,
-            "day": today.day,
-        }
+        return defaultDate
