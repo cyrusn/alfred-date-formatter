@@ -67,20 +67,22 @@ def getChineseDateFormat(myDate):
 
 
 def parseDateString(date_string):
+    today = date.today()
+    myDate = today
     for reg in INPUT_DATE_REG_EXP:
         searchResult = re.search(reg, date_string)
         if searchResult:
-            today = date.today()
             parsedDateDict = {k: int(v)
                               for k, v in searchResult.groupdict().items()}
-
             if "year" not in parsedDateDict:
                 parsedDateDict["year"] = today.year
 
             myDate = date(**parsedDateDict)
             if myDate < today:
                 myDate = myDate.replace(year=myDate.year + 1)
-            return myDate
+
+            break
+    return myDate
 
 
 def formatDate(fmt, date_string):
