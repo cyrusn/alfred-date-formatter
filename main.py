@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3
+#!/usr/bin/env python3
 import json
 import argparse
 import re
@@ -74,12 +74,14 @@ def parseDateString(date_string):
         if searchResult:
             parsedDateDict = {k: int(v)
                               for k, v in searchResult.groupdict().items()}
+
             if "year" not in parsedDateDict:
                 parsedDateDict["year"] = today.year
-
-            myDate = date(**parsedDateDict)
-            if myDate < today:
-                myDate = myDate.replace(year=myDate.year + 1)
+                myDate = date(**parsedDateDict)
+                if myDate < today:
+                    myDate = myDate.replace(year=myDate.year + 1)
+            else:
+                myDate = date(**parsedDateDict)
 
             break
     return myDate
